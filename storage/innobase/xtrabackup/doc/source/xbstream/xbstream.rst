@@ -56,7 +56,7 @@ The resulting files have the qpress archive format, i.e., every ``*.qp`` file
 produced by |xtrabackup| is essentially a one-file qpress archive and can be
 extracted and uncompressed by the `qpress file archiver
 <http://www.quicklz.com/>`_. This means that there is no need to decompress
-entire backup to restore a single table as with :file:`tar.gz`.
+entire backup to restore a single table as with :file:`tar.gz`. 
 
 To decompress individual files, run |xbstream| with the
 :option:`--decompress` option. You may control the number of threads
@@ -65,3 +65,5 @@ option.
 
 Also, files can be decompressed using the **qpress** tool that can be downloaded from
 `here <http://www.quicklz.com/>`_. Qpress supports multi-threaded decompression.
+
+The default size of the chunk file is 10MB. Use ``--read-buffer-size`` to adjust the chunk size. If you use encryption, specify the ``--read-buffer-size`` option and the ``--encrypt-chunk-size`` option to adjust the chunk size.

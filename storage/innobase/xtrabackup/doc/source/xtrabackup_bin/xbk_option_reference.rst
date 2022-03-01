@@ -349,6 +349,10 @@ Options
    xtrabackup child process. See the :program:`xtrabackup` :doc:`documentation
    <../xtrabackup_bin/xtrabackup_binary>` for more details.
 
+   .. note::
+
+      To adjust the xbcloud/xbstream chunk size when you use encryption, you must adjust both the ``--encrypt-chunk-size`` and ``--read-buffer-size`` options.
+
 .. option:: --export
 
    Create files necessary for exporting tables. See :doc:`Restoring Individual
@@ -748,8 +752,17 @@ Options
 
 .. option:: --read-buffer-size
 
-   Set the datafile read buffer size, given value is scaled up to page size. Default
-   is 10Mb.
+   Set the datafile read buffer size, given value is scaled up to page size. The default chunk size is 10Mb. You can use this option to adjust the xbcloud/xbstream chunk size. 
+
+   .. note::
+
+      If you use encryption, you must adjust the ``--read-buffer-size`` option and the ``--encrypt-chunk-size`` option change the chunk size. 
+
+   For example, the following code sets the chunk size in a non-encrypted database:
+
+   .. code-block:: bash
+
+      $ xtrabackup ... --read-buffer-size=1G | xbcloud put 
 
 
 .. option:: --rebuild-indexes
@@ -811,7 +824,7 @@ Options
    thread will be restarted when the backup finishes. This option is
    implemented in order to deal with `replicating temporary tables
    <https://dev.mysql.com/doc/refman/5.7/en/replication-features-temptables.html>`_
-   and isn't neccessary with Row-Based-Replication.
+   and isn't necessary with Row-Based-Replication.
 
 .. option:: --safe-slave-backup-timeout=SECONDS
 
